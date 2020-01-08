@@ -9,7 +9,7 @@ using DAL;
 
 namespace BLL
 {
-    public class UserService : Service, IUserService
+    public class UserService : UserIdService, IUserService
     {
         public UserService(IUnitOfWork unit, IMapper mapper) : base(unit, mapper)
         {
@@ -66,6 +66,12 @@ namespace BLL
         public async Task<UserDTO> GetUserByEmailAsync(string email)
         {
             var user = await unit.UserRepository.GetUserByEmailAsync(email);
+            return mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<UserDTO> GetUserByUserNameAsync(string userName)
+        {
+            var user = await unit.UserRepository.GetUserByUserNameAsync(userName);
             return mapper.Map<UserDTO>(user);
         }
 

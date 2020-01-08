@@ -67,7 +67,7 @@ namespace BLL
             return albums;
         }
 
-        public async Task<IEnumerable<SongsContainerDTO>> GetSongContainersByGenreAsync(string genre, string userId)
+        public async Task<IEnumerable<SongsContainerDTO>> GetSongsContainersByGenreAsync(string genre, string userId)
         {
             var containers = await unit.SongsContainerRepository.GetSongContainersByGenreAsync(genre);
             var user = await unit.UserRepository.GetUserByIdAsync(userId);
@@ -100,10 +100,18 @@ namespace BLL
             return containers.Select(x => ConvertSongsContainerToDTO(x, user));
         }
 
-        public async Task AddSongToPlaylistAsync(int playlistId, int songId)
+        public async Task AddSongToPlaylistAsync(int playlistId, int songId, string userId)
         {
+            var user = await unit.UserRepository.GetUserByIdAsync(userId);
             var song = await unit.SongRepository.GetAsync(songId);
-            var playlist = await unit.SongsContainerRepository.GetAsync(playlistId);
+            var playlist = user.Playlists.FirstOrDefault(x => x.Id == playlistId);
+
+            if (song == null)
+                throw new NotFoundException();
+
+            if (playlist == null)
+                throw new NotFoundException("Current user does not contain this playlist");
+
             playlist.Songs.Add(song);
             await unit.SongsContainerRepository.UpdateAsync(playlist);
         }
@@ -116,7 +124,7 @@ namespace BLL
             await unit.SongsContainerRepository.UpdateAsync(container);
         }
 
-        public async Task<IEnumerable<string>> GetGenresBySongsContainer(int id)
+        public async Task<IEnumerable<string>> GetGenresBySongsContainerAsync(int id)
         {
             var container = await unit.SongsContainerRepository.GetAsync(id);
             return container.Genres.Select(x => x.Name);

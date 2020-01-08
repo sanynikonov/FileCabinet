@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
+using BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
-using BLL;
 
 namespace API
 {
@@ -36,15 +36,16 @@ namespace API
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<AutoMapperBLLConfig>();
+                cfg.AddProfile<AutoMapperAPIConfig>();
             });
             builder.Register(x => new Mapper(mapperConfig)).As<IMapper>();
             builder.RegisterModule<UnitAutofacConfig>();
 
             builder.RegisterType<UserService>().AsImplementedInterfaces();
-            builder.RegisterType<SongService>().AsImplementedInterfaces();
+            builder.RegisterType<UserIdService>().AsImplementedInterfaces();
             builder.RegisterType<CommentaryService>().AsImplementedInterfaces();
+            builder.RegisterType<SongService>().AsImplementedInterfaces();
             builder.RegisterType<SongsContainerService>().AsImplementedInterfaces();
-
 
             var container = builder.Build();
 

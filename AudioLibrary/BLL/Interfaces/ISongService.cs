@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public interface ISongService
+    public interface ISongService : IDisposable
     {
         Task AddSongAsync(SongDTO item);
         Task RemoveSongAsync(int id);

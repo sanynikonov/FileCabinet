@@ -63,7 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ForbiddenException.cs" />
     <Compile Include="Exceptions\SelfSubscriptionException.cs" />
+    <Compile Include="Interfaces\IUserIdService.cs" />
     <Compile Include="Services\CommentaryService.cs" />
     <Compile Include="Infrastructure\AutoMapperBLLConfig.cs" />
     <Compile Include="DTO\CommentaryDTO.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\SongsContainerService.cs" />
     <Compile Include="Services\SongService.cs" />
+    <Compile Include="Services\UserIdService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

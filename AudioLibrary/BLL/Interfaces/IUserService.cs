@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public interface IUserService
+    public interface IUserService : IDisposable, IUserIdService
     {
         Task AddUserAsync(UserDTO user, string password);
 
         Task<UserDTO> GetUserByIdAsync(string id);
         Task<UserDTO> GetUserByPhoneNumberAsync(string phoneNumber);
         Task<UserDTO> GetUserByEmailAsync(string email);
+        Task<UserDTO> GetUserByUserNameAsync(string userName);
         Task<IEnumerable<UserDTO>> GetUsersBySubnameAsync(string name);
         Task<IEnumerable<UserDTO>> GetFollowersAsync(string userId);
         Task<IEnumerable<UserDTO>> GetFollowingsAsync(string userId);

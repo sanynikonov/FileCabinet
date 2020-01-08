@@ -16,7 +16,8 @@ namespace BLL
                 .ForMember(p => p.SongId, x => x.MapFrom(c => c.Song.Id))
                 .ForMember(p => p.User, x => x.Ignore());
             CreateMap<CommentaryDTO, Commentary>()
-                .ForMember(p => p.User, x => x.Ignore());
+                .ForMember(p => p.User, x => x.Ignore())
+                .ForMember(p => p.DateOfCreation, x => x.MapFrom(c => DateTime.Now));
 
             CreateMap<Song, SongDTO>()
                 .ForMember(p => p.AlbumId, x => x.MapFrom(s => s.Album.Id))
@@ -27,7 +28,8 @@ namespace BLL
                 .ForMember(p => p.LikesAmount, x => x.MapFrom(s => s.Likes.Count))
                 .ForMember(p => p.Author, x => x.Ignore());
             CreateMap<SongsContainerDTO, SongsContainer>()
-                .ForMember(p => p.Author, x => x.Ignore());
+                .ForMember(p => p.Author, x => x.Ignore())
+                .ForMember(p => p.DateOfCreation, x => x.MapFrom(c => DateTime.Now));
 
             CreateMap<User, UserDTO>()
                 .ForMember(p => p.Country, x => x.MapFrom(u => u.Country.Name));

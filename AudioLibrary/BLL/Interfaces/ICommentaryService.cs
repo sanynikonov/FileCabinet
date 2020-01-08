@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public interface ICommentaryService
+    public interface ICommentaryService : IDisposable
     {
         Task<CommentaryDTO> GetCommentaryAsync(int id);
         Task AddCommentaryAsync(CommentaryDTO item);
