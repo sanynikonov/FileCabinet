@@ -8,7 +8,8 @@ namespace BLL
 {
     public interface ISongsContainerService : IDisposable
     {
-        Task AddSongsContainerAsync(SongsContainerDTO item);
+        Task AddAlbumAsync(SongsContainerDTO item);
+        Task AddPlaylistAsync(SongsContainerDTO item);
         Task RemoveSongsContainerAsync(int id);
 
         Task<SongsContainerDTO> GetSongsContainerAsync(int id, string userId);

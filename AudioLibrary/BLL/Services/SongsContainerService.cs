@@ -14,13 +14,6 @@ namespace BLL
         {
         }
 
-        public async Task AddSongsContainerAsync(SongsContainerDTO item)
-        {
-            var container = mapper.Map<SongsContainer>(item);
-            container.Author = await unit.UserRepository.GetUserByIdAsync(item.Author.Id);
-            await unit.SongsContainerRepository.AddAsync(container);
-        }
-
         public async Task RemoveSongsContainerAsync(int id)
         {
             var container = await unit.SongsContainerRepository.GetAsync(id);
@@ -128,6 +121,24 @@ namespace BLL
         {
             var container = await unit.SongsContainerRepository.GetAsync(id);
             return container.Genres.Select(x => x.Name);
+        }
+
+        public async Task AddAlbumAsync(SongsContainerDTO item)
+        {
+            var container = mapper.Map<SongsContainer>(item);
+            var author = await unit.UserRepository.GetUserByIdAsync(item.Author.Id);
+            container.Author = author;
+            author.Albums.Add(container);
+            await unit.UserRepository.UpdateUserAsync(author);
+        }
+
+        public async Task AddPlaylistAsync(SongsContainerDTO item)
+        {
+            var container = mapper.Map<SongsContainer>(item);
+            var author = await unit.UserRepository.GetUserByIdAsync(item.Author.Id);
+            container.Author = author;
+            author.Playlists.Add(container);
+            await unit.UserRepository.UpdateUserAsync(author);
         }
     }
 }

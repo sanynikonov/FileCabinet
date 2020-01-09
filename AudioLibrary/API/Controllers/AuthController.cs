@@ -107,7 +107,7 @@ namespace API.Controllers
 
         [HttpPut]
         [Authorize]
-        [Route("changepassword")]
+        [Route("change-password")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
         {
             try
@@ -123,7 +123,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("usernametaken/{userName}")]
+        [Route("username-taken/{userName}")]
         public async Task<IHttpActionResult> UserNameAlreadyTakenAsync(string userName)
         {
             try

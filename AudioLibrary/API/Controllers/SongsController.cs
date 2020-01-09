@@ -28,6 +28,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Artist")]
         public async Task<IHttpActionResult> Add([FromBody] SongModel songModel)
         {
             if (!ModelState.IsValid)
@@ -48,7 +49,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("api/songs/uploadaudio")]
+        [Authorize(Roles = "Artist")]
+        [Route("api/songs/upload-audio")]
         public IHttpActionResult AddAudio()
         {
             try
@@ -76,6 +78,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Artist")]
         public async Task<IHttpActionResult> Remove(int id)
         {
             try
@@ -143,7 +146,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/songs/byname")]
+        [Route("api/songs/by-name")]
         public async Task<IHttpActionResult> GetSongsByName([FromBody]string name)
         {
             try

@@ -48,7 +48,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Post([FromBody] SongsContainerModel songsContainer)
+        [Authorize(Roles = "Artist")]
+        [Route("api/albums")]
+        public async Task<IHttpActionResult> PostAlbum([FromBody] SongsContainerModel songsContainer)
         {
             if (!ModelState.IsValid)
             {
@@ -59,8 +61,30 @@ namespace API.Controllers
             {
                 var containerDTO = mapper.Map<SongsContainerDTO>(songsContainer);
                 containerDTO.Author = mapper.Map<UserDTO>(songsContainer.Author);
-                await service.AddSongsContainerAsync(containerDTO);
-                return Ok("Songs container was added");
+                await service.AddAlbumAsync(containerDTO);
+                return Ok("Album was added");
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/playlists")]
+        public async Task<IHttpActionResult> PostPlaylist([FromBody] SongsContainerModel songsContainer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var containerDTO = mapper.Map<SongsContainerDTO>(songsContainer);
+                containerDTO.Author = mapper.Map<UserDTO>(songsContainer.Author);
+                await service.AddPlaylistAsync(containerDTO);
+                return Ok("Playlist was added");
             }
             catch (Exception e)
             {
@@ -83,8 +107,7 @@ namespace API.Controllers
                 }
 
                 var path = HttpContext.Current.Server.MapPath("~/UsersContent/Covers");
-                var count = new DirectoryInfo(path).GetFiles().Count();
-                fileName = "cover #" + count + fileName.Substring(fileName.Length - 4);
+                fileName = DateTime.Now.Ticks + fileName.Substring(fileName.Length - 4);
                 var fullpath = Path.Combine(path, fileName);
 
                 file.SaveAs(fullpath);
@@ -126,7 +149,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/songscontainers/bygenre")]
+        [Route("api/songscontainers/by-genre")]
         public async Task<IHttpActionResult> GetByGenre([FromBody]string genre)
         {
             try
@@ -149,8 +172,8 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/songscontainers/byname")]
-        public async Task<IHttpActionResult> GetByName([FromBody]string name)
+        [Route("api/songscontainers/by-name/{name}")]
+        public async Task<IHttpActionResult> GetByName(string name)
         {
             try
             {

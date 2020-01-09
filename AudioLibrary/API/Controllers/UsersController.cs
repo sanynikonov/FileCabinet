@@ -102,7 +102,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/users/byphone/{phoneNumber}")]
+        [Route("api/users/by-phone/{phoneNumber}")]
         public async Task<IHttpActionResult> GetByPhoneNumber(string phoneNumber)
         {
             try
@@ -123,7 +123,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/users/byemail/{email}")]
+        [Route("api/users/by-email/{email}")]
         public async Task<IHttpActionResult> GetByEmail(string email)
         {
             try
@@ -144,7 +144,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/users/byusername/{userName}")]
+        [Route("api/users/by-username/{userName}")]
         public async Task<IHttpActionResult> GetByUserName(string userName)
         {
             try
@@ -165,7 +165,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("api/users/bysubname/{subname}")]
+        [Route("api/users/by-subname/{subname}")]
         public async Task<IHttpActionResult> GetUsersBySubname(string subname)
         {
             try
