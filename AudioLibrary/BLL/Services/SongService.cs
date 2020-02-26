@@ -20,6 +20,7 @@ namespace BLL
             var song = mapper.Map<Song>(item);
             song.Album = await unit.SongsContainerRepository.GetAsync(item.AlbumId);
             await unit.SongRepository.AddAsync(song);
+            await unit.SaveChangesAsync();
         }
 
         public async Task UpdateSongAsync(SongDTO item)
@@ -27,6 +28,7 @@ namespace BLL
             var song = mapper.Map<Song>(item);
             song.Album = await unit.SongsContainerRepository.GetAsync(item.AlbumId);
             await unit.SongRepository.UpdateAsync(song);
+            await unit.SaveChangesAsync();
         }
 
         public async Task RemoveSongAsync(int id)
@@ -35,6 +37,7 @@ namespace BLL
             if (song == null)
                 throw new NotFoundException();
             await unit.SongRepository.RemoveAsync(id);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<SongDTO> GetSongAsync(int id, string userId)
@@ -92,6 +95,7 @@ namespace BLL
                 song.Likes.Add(user);
 
             await unit.SongRepository.UpdateAsync(song);
+            await unit.SaveChangesAsync();
         }
 
         public async Task AddListenAsync(int id)
@@ -102,6 +106,7 @@ namespace BLL
             song.Listens++;
 
             await unit.SongRepository.UpdateAsync(song);
+            await unit.SaveChangesAsync();
         }
 
     }

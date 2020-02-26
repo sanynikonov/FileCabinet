@@ -23,16 +23,19 @@ namespace BLL
             if (user.Country == null)
                 throw new NotFoundException();
             await unit.UserRepository.AddUserAsync(user, password);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<ClaimsIdentity> AuthenticateUserAsync(string userName, string password, string claimType)
         {
             return await unit.UserRepository.AuthenticateUserAsync(userName, password, claimType);
+
         }
 
         public async Task ChangePasswordAsync(string userId, string currentPassword, string newPassword)
         {
             await unit.UserRepository.ChangePasswordAsync(userId, currentPassword, newPassword);
+            await unit.SaveChangesAsync();
         }
 
         public async Task FollowToAccountAsync(string accountId, string followerId)
@@ -41,6 +44,7 @@ namespace BLL
             var userThatFollows = await unit.UserRepository.GetUserByIdAsync(followerId);
             userToFollow.Followers.Add(userThatFollows);
             await unit.UserRepository.UpdateUserAsync(userToFollow);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<UserDTO> GetUserByIdAsync(string id)
@@ -103,21 +107,25 @@ namespace BLL
         public async Task AddToAdminsAsync(string userId)
         {
             await unit.UserRepository.AddToRoleAsync(userId, "Admin");
+            await unit.SaveChangesAsync();
         }
 
         public async Task AddToArtistsAsync(string userId)
         {
             await unit.UserRepository.AddToRoleAsync(userId, "Artist");
+            await unit.SaveChangesAsync();
         }
 
         public async Task DeleteFromAdminsAsync(string userId)
         {
             await unit.UserRepository.RemoveFromRoleAsync(userId, "Admin");
+            await unit.SaveChangesAsync();
         }
 
         public async Task DeleteFromArtistsAsync(string userId)
         {
             await unit.UserRepository.RemoveFromRoleAsync(userId, "Artist");
+            await unit.SaveChangesAsync();
         }
     }
 }

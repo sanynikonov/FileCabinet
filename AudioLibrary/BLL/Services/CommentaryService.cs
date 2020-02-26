@@ -20,6 +20,7 @@ namespace BLL
             commentary.Song = await unit.SongRepository.GetAsync(item.SongId);
             commentary.User = await unit.UserRepository.GetUserByIdAsync(item.User.Id);
             await unit.CommentaryRepository.AddAsync(commentary);
+            await unit.SaveChangesAsync();
         }
 
         public async Task UpdateCommentaryAsync(CommentaryDTO item)
@@ -28,11 +29,13 @@ namespace BLL
             commentary.Song = await unit.SongRepository.GetAsync(item.SongId);
             commentary.User = await unit.UserRepository.GetUserByIdAsync(item.User.Id);
             await unit.CommentaryRepository.UpdateAsync(commentary);
+            await unit.SaveChangesAsync();
         }
 
         public async Task RemoveCommentaryAsync(int id)
         {
             await unit.CommentaryRepository.RemoveAsync(id);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<CommentaryDTO> GetCommentaryAsync(int id)

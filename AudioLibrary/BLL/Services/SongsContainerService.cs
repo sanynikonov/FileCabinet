@@ -20,6 +20,7 @@ namespace BLL
             if (container == null)
                 throw new NotFoundException();
             await unit.SongsContainerRepository.RemoveAsync(id);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<SongsContainerDTO> GetSongsContainerAsync(int id, string userId)
@@ -107,6 +108,7 @@ namespace BLL
 
             playlist.Songs.Add(song);
             await unit.SongsContainerRepository.UpdateAsync(playlist);
+            await unit.SaveChangesAsync();
         }
 
         public async Task SlapLikeAsync(int songsContainerId, string userId)
@@ -115,6 +117,7 @@ namespace BLL
             var container = await unit.SongsContainerRepository.GetAsync(songsContainerId);
             container.Likes.Add(user);
             await unit.SongsContainerRepository.UpdateAsync(container);
+            await unit.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<string>> GetGenresBySongsContainerAsync(int id)
@@ -130,6 +133,7 @@ namespace BLL
             container.Author = author;
             author.Albums.Add(container);
             await unit.UserRepository.UpdateUserAsync(author);
+            await unit.SaveChangesAsync();
         }
 
         public async Task AddPlaylistAsync(SongsContainerDTO item)
@@ -139,6 +143,7 @@ namespace BLL
             container.Author = author;
             author.Playlists.Add(container);
             await unit.UserRepository.UpdateUserAsync(author);
+            await unit.SaveChangesAsync();
         }
     }
 }

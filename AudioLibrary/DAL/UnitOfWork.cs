@@ -63,5 +63,10 @@ namespace DAL
         {
             context.Dispose();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
     }
 }

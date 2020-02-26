@@ -21,13 +21,11 @@ namespace DAL
         public async Task AddAsync(TEntity item)
         {
             entities.Add(item);
-            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TEntity item)
         {
             context.Entry(item).State = EntityState.Modified;
-            await context.SaveChangesAsync();
         }
 
         public async Task<TEntity> GetAsync(TKey id)
@@ -40,7 +38,6 @@ namespace DAL
             var item = entities.Find(id);
             if (item != null)
                 entities.Remove(item);
-            await context.SaveChangesAsync();
         }
 
         public void Dispose()

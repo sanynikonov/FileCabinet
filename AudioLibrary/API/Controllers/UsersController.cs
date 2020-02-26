@@ -27,7 +27,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("api/users/photo")]
-        public IHttpActionResult PostCover()
+        public IHttpActionResult PostPhoto()
         {
             try
             {
@@ -57,11 +57,15 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("api/users/{id}/photo")]
-        public async Task<HttpResponseMessage> GetCover(string id)
+        public async Task<HttpResponseMessage> GetPhoto(string id)
         {
+            var user = await service.GetUserByIdAsync(id);
+            if (user.PhotoPath == null || user.PhotoPath == "")
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+
             var result = new HttpResponseMessage(HttpStatusCode.OK);
 
-            var user = await service.GetUserByIdAsync(id);
+            
             var fileName = user.PhotoPath;
             //var fileName = "cover #0.jpg";
 
@@ -228,8 +232,8 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("api/users/{id}/follow/{accountId}")]
-        public async Task<IHttpActionResult> GetFollowings(string id, string accountId)
+        [Route("api/users/{id}/followings/{accountId}")]
+        public async Task<IHttpActionResult> FollowToAccount(string id, string accountId)
         {
             try
             {

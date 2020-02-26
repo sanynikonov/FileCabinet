@@ -12,5 +12,7 @@ namespace DAL
         ISongRepository SongRepository { get; }
         ISongsContainerRepository SongsContainerRepository { get; }
         IUserRepository UserRepository { get; }
+
+        Task<int> SaveChangesAsync();
     }
 }
